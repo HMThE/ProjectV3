@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_logic_table"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.icelord.projectv3.LogicTable">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="0"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/Times"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Попытка: "
+                android:textAlignment="viewEnd" />
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:id="@+id/Result"
+            android:textSize="20sp"
+            android:textAlignment="center"
+            android:layout_weight="0"
+            android:layout_height="50dp" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="match_parent">
+
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/onekapusta_xx"
+                    android:id="@+id/imageView3"
+                    android:layout_weight="1"
+                    android:layout_height="70dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/twosvekla_xx"
+                    android:id="@+id/imageView2"
+                    android:layout_weight="1"
+                    android:layout_height="70dp" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/threekartoshka_xx"
+                    android:id="@+id/imageView"
+                    android:layout_weight="1"
+                    android:layout_height="70dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/twokartoshka_xx"
+                    android:id="@+id/imageView6"
+                    android:layout_weight="1"
+                    android:layout_height="70dp" />
+
+                <ImageView
+                    app:srcCompat="@mipmap/threekapusta_xx"
+                    android:id="@+id/imageView5"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:layout_width="match_parent" />
+
+                <ImageView
+                    app:srcCompat="@mipmap/onesvekla_xx"
+                    android:id="@+id/imageView4"
+                    android:layout_weight="1"
+                    android:layout_height="70dp"
+                    android:layout_width="match_parent" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageView
+                    app:srcCompat="@mipmap/threesvekla_xx"
+                    android:id="@+id/imageView9"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
+
+                <ImageView
+                    app:srcCompat="@mipmap/onekartoshka_xx"
+                    android:id="@+id/imageView8"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
+
+                <ImageView
+                    app:srcCompat="@android:drawable/ic_menu_help"
+                    android:id="@+id/Propusk"
+                    android:layout_weight="1"
+                    android:layout_width="match_parent"
+                    android:layout_height="70dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:text="Что должно стоять на пустом месте?"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/textView"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_weight="1"/>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/threesvekla_xx"
+                    android:id="@+id/Incorrect1"
+                    android:layout_weight="1"
+                    android:onClick="OnClickIncorrect"
+                    android:layout_height="80dp" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/onekartoshka_xx"
+                    android:id="@+id/Incorrect2"
+                    android:layout_weight="1"
+                    android:onClick="OnClickIncorrect"
+                    android:layout_height="80dp" />
+
+                <ImageButton
+                    android:layout_width="match_parent"
+                    app:srcCompat="@mipmap/twokapusta_xx"
+                    android:id="@+id/Correct"
+                    android:layout_weight="1"
+                    android:onClick="OnClickCorrect"
+                    android:layout_height="80dp" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>
