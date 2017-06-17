@@ -8,19 +8,29 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".MainMenu">
+        <activity android:name=".MainMenu"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LogicTable" />
-        <activity android:name=".WhatNehvat" />
-        <activity android:name=".DrawingLine" />
-        <activity android:name=".NehvatLvlChoice" />
-        <activity android:name=".PaintLvlChoice" />
-        <activity android:name=".TableLvlChoice"></activity>
+
+        <activity android:name=".LogicTable"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".WhatNehvat"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".DrawingLine"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".NehvatLvlChoice"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".PaintLvlChoice"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".TableLvlChoice"
+            android:screenOrientation="portrait">
+        </activity>
     </application>
 
 </manifest>

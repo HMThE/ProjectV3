@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.graphics.Point;
 import android.graphics.Rect;
 import android.graphics.Typeface;
 import android.os.Handler;
@@ -17,6 +18,7 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Display;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
@@ -56,6 +58,13 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
             lvl=1;
         }
 
+        Display display = getWindowManager().getDefaultDisplay();
+        Point point = new Point();
+        display.getSize(point);
+        int width = point.x;
+        int height = point.y;
+        //Toast.makeText(getApplicationContext(),width+" "+height, Toast.LENGTH_LONG).show();
+
         surf = (SurfaceView) findViewById(R.id.surfaceView);
         surf.getHolder().addCallback(this);
         paint.setStyle(Paint.Style.STROKE);
@@ -80,13 +89,13 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
             case 1:
                 setTitle("Уровень 1: Сборы");
                 koord = new float[4][2];
-                koord[0][0] = 450;
-                koord[0][1] = 1350;
-                koord[1][0] = 750;
+                koord[0][0] = width/2.4f;                                                               //не успел выставить размеры, чтобы они работали для всех разрешений.
+                koord[0][1] = 1350;                                                                     //сейчас они в таком образе франкенштейна.
+                koord[1][0] = width/1.4f;
                 koord[1][1] = 600;
-                koord[2][0] = 250;
+                koord[2][0] = width/4.3f;
                 koord[2][1] = 500;
-                koord[3][0] = 878;
+                koord[3][0] = width/1.2f;
                 koord[3][1] = 1250;
                 size = 50;
                 task = "Собираетесь выйти из дома?\nЧто нужно не забыть с собой.";
@@ -95,15 +104,15 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
             case 2:
                 setTitle("Уровень 2: Омлет");
                 koord = new float[5][2];
-                koord[0][0] = 150;
+                koord[0][0] = width/7.2f;
                 koord[0][1] = 1120;
-                koord[1][0] = 878;
+                koord[1][0] = width/1.2f;
                 koord[1][1] = 900;
-                koord[2][0] = 900;
+                koord[2][0] = width/1.2f+10;
                 koord[2][1] = 500;
-                koord[3][0] = 250;
+                koord[3][0] = width/4.3f;
                 koord[3][1] = 600;
-                koord[4][0] = 470;
+                koord[4][0] = width/2.3f;
                 koord[4][1] = 250;
                 task = "Надумали приготовить омлет?\nНе забудьте порядок действий.";
                 size = 50;
@@ -136,6 +145,7 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
             }
         };
         dialogstart();
+
     }
 
     @Override
@@ -144,10 +154,16 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
         handler.removeCallbacksAndMessages(null);
     }
 
+    @Override
+    public void onPause() {
+        super.onPause();
+        thread.setRunning(false);
+    }
+
     public void dialoh(int i) {
 
             thread.setRunning(false);
-            //Toast.makeText(getApplicationContext(),Float.toString(surf.getHeight()), Toast.LENGTH_LONG).show();
+        //Toast.makeText(getApplicationContext(),Float.toString(surf.getHeight()), Toast.LENGTH_LONG).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(DrawingLine.this);
             builder.setTitle("УРА!");
             builder.setMessage("Поздравляем");
@@ -213,34 +229,36 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
 
     public  void draw(Canvas canvas) {
 
-        if (drawing) {
-
             canvas.drawColor(Color.WHITE);
             canvas.drawBitmap(bitmap,0,0, paint);
 
-            for (int j = i; j < koord.length; j++) {
+
+            for (int j = i; j < koord.length; j++) {                                                                            //отрисовка контуров кругов и текста
                 canvas.drawCircle(koord[j][0], koord[j][1], size, paint2);
                 canvas.drawText(Integer.toString(j+1),koord[j][0]-size/4, koord[j][1]+size/4, paintText);
             }
-            if(i!=0) {
+            if(i!=0) {                                                                                                          //отрисовка закаршенных кругов и текста
                 for (int count = 0; count <= i; count++) {
                     canvas.drawCircle(koord[count][0], koord[count][1], size, paint3);
                     canvas.drawText(Integer.toString(count+1),koord[count][0]-size/4, koord[count][1]+size/4, paintText);
                 }
             }
-            for (int count = 0; count < i; count++) {
+            for (int count = 0; count < i; count++) {                                                                           //отрисовка линий и текста
                 canvas.drawLine(koord[count][0], koord[count][1], koord[count + 1][0], koord[count + 1][1], paint);
                 canvas.drawCircle(koord[count][0],koord[count][1],size, paint3);
                 canvas.drawText(Integer.toString(count+1),koord[count][0]-size/4, koord[count][1]+size/4, paintText);
             }
+
+            if (drawing) {
+
             if (i < koord.length-1) {
-                if (XX >= koord[i][0] - size && XX <= koord[i][0] + size && YY >= koord[i][1] - size && YY <= koord[i][1] + size) {       // Начальаян точка
+                if (XX >= koord[i][0] - size && XX <= koord[i][0] + size && YY >= koord[i][1] - size && YY <= koord[i][1] + size) {       // Проверка вхождения начальной координаты в круг
                     canvas.drawCircle(koord[i][0],koord[i][1],size,paint3);
                     canvas.drawPath(path, paint);
                     canvas.drawText(Integer.toString(i+1),koord[i][0]-size/4, koord[i][1]+size/4, paintText);
 
-                    if (XXX >= koord[i + 1][0] - size && XXX <= koord[i + 1][0] + size && YYY >= koord[i + 1][1] - size && YYY <= koord[i + 1][1] + size) {        // Конечная точка
-                        Log.i("ДЛИННАЯ СТРОКААААА", "условие сработало");
+                    if (XXX >= koord[i + 1][0] - size && XXX <= koord[i + 1][0] + size && YYY >= koord[i + 1][1] - size && YYY <= koord[i + 1][1] + size) {  // Проверка вхождения конечной координаты в следующий круг
+                        Log.i("Соединене ", "условие сработало");
                         XX = koord[i + 1][0];
                         YY = koord[i + 1][1];
                         XXX = 0;
@@ -248,19 +266,21 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
                         canvas.drawPath(path, paint);
                         canvas.drawText(Integer.toString(i+1),koord[i+1][0]-size/4, koord[i+1][1]+size/4, paintText);
 
-                        for (int count = 0; count < i; count++) {
+                        /*for (int count = 0; count < i; count++) {
                             canvas.drawLine(koord[count][0], koord[count][1], koord[count + 1][0], koord[count + 1][1], paint);
                             canvas.drawText(Integer.toString(i+1),koord[count+1][0]-size/4, koord[count+1][1]+size/4, paintText);
-                        }
+                        }*/
 
                         i++;
                         Log.i("ДЛИННАЯ СТРОКААААА", Integer.toString(i));
                         //change = true;
                     }
                 }
+
             }
 
         }
+        canvas.drawText(Integer.toString(i+1),koord[i][0]-size/4, koord[i][1]+size/4, paintText);
     }
     int action = 0;
     @Override
@@ -271,26 +291,27 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
 
             path.reset();
             path.moveTo(XX, YY);
-            path.lineTo(event.getX(), event.getY()-250);
+            path.lineTo(event.getX(), event.getY()-240);
             XXX = event.getX();
-            YYY = event.getY()-250;
-            //Log.i("Координаты XXX и YYY", Float.toString(XXX)+" "+Float.toString(YYY));
+            YYY = event.getY()-240;
+            Log.i("Координаты XXX и YYY", Float.toString(XXX)+" "+Float.toString(YYY));
 
 
         } else if (action == MotionEvent.ACTION_DOWN) {
             //
             path = new Path();
-            path.moveTo(event.getX(), event.getY()-250);
+            path.moveTo(event.getX(), event.getY()-240);
             XX = event.getX();
-            YY = event.getY()-250;
+            YY = event.getY()-240;
             Log.i("Координаты XX и YY", Float.toString(XX)+" "+Float.toString(YY));
 
             drawing = true;
 
 
         } else if (action == MotionEvent.ACTION_UP) {
-            path.lineTo(event.getX(), event.getY()-250);
-
+            path.lineTo(event.getX(), event.getY()-240);
+            XXX = 0;
+            YYY = 0;
             drawing = false;
 
         }
@@ -367,7 +388,7 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
                 try {
                     c = myThreadSurfaceHolder.lockCanvas(null);
                     synchronized (myThreadSurfaceHolder) {
-                       c.drawColor(Color.WHITE);
+                       /* c.drawColor(Color.WHITE);
 
                         c.drawBitmap(bitmap,0,0, paint);
 
@@ -384,9 +405,9 @@ public class DrawingLine extends AppCompatActivity implements SurfaceHolder.Call
                         for(int count = 0;count < i; count++) {
                             c.drawLine(koord[count][0], koord[count][1], koord[count+1][0], koord[count+1][1], paint);
                             c.drawText(Integer.toString(count+1),koord[count][0]-size/4, koord[count][1]+size/4, paintText);
-                        }
+                        }*/
                         draw(c);
-                        c.drawText(Integer.toString(i+1),koord[i][0]-size/4, koord[i][1]+size/4, paintText);
+                        //c.drawText(Integer.toString(i+1),koord[i][0]-size/4, koord[i][1]+size/4, paintText);
                     }
                 } finally {
 
